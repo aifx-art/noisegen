@@ -34,8 +34,8 @@ pub fn student_noise(width: usize, height: usize, channels: usize, degrees_of_fr
     // Generate raw noise values using the Student's t-distribution
     let mut noise_values: Vec<f64> = (0..num_pixels).map(|_| student.sample(&mut rng)).collect();
 
-    let noise_values = standardize(&noise_values);
-    //let v = normalize_to_range(&v, 0., 1.);
+    //let noise_values = standardize(&noise_values);
+    //let noise_values = normalize_to_range(&noise_values, 0., 1.);
     //normalize_minmax(&v);
     // println!("{:?}", noise_values);
 

@@ -10,18 +10,20 @@ fn main() -> anyhow::Result<()> {
     
     let width = 100;
     let height = 100;
-    let degrees_of_freedom = 1.0;
-    let noise = student_noise(width, height, 16, degrees_of_freedom);
-    let noise = standardize(&noise);
-    let channels = unit_vec_to_char(&noise);
-    let img = Tensor::from_vec(channels, (height, width,16), &Device::Cpu)?
-    .permute((2, 0, 1))?
-    .to_dtype(DType::F16)?
-    .affine(2. / 255., -1.)?
-    .unsqueeze(0)?;
+    let degrees_of_freedom = 11.0;
+    // let noise = student_noise(width, height, 3, degrees_of_freedom);
+    // let noise = standardize(&noise);
+    // let channels = unit_vec_to_char(&noise);
+    // let img = Tensor::from_vec(channels, (height, width,3), &Device::Cpu)?
+    // .permute((2, 0, 1))?
+    // .to_dtype(DType::F16)?
+    // .affine(2. / 255., -1.)?
+    // .unsqueeze(0)?;
+    // println!("tensors noise: {:?}",img);
 
-    println!("tensors noise: {:?}",img);
-    create_rgb_image_from_1d(&noise, width, height, 16,"output.png");
+    let noise = student_noise(width, height, 3, degrees_of_freedom);
+    let noise = standardize(&noise);
+    create_rgb_image_from_1d(&noise, width, height, 3,"output.png");
 
     let image_path = "test.png";
     let dtype = DType::F16;
