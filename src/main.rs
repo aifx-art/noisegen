@@ -11,7 +11,7 @@ fn main() -> anyhow::Result<()> {
     let width = 100;
     let height = 100;
     let degrees_of_freedom = 11.0;
-     let noise = student_noise(width, height, 3, degrees_of_freedom);
+     let noise = student_noise(width, height, 3, degrees_of_freedom, 420);
      let noise = standardize(&noise);
     // let channels = unit_vec_to_char(&noise);
      let img = Tensor::from_vec(noise.clone(), (height, width,3), &Device::Cpu)?

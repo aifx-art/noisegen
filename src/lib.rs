@@ -1,7 +1,7 @@
 use candle_core::{DType, Device, Tensor};
 use image::{ImageBuffer, Rgb};
 
-use rand::{thread_rng, Rng};
+use rand::{rngs::StdRng, thread_rng, Rng, SeedableRng};
 use rand_distr::{Distribution, StudentT};
 
 pub fn image_to_tensor<T: AsRef<std::path::Path>>(path: T, dtype: DType) -> anyhow::Result<Tensor> {
@@ -26,10 +26,12 @@ pub fn image_to_tensor<T: AsRef<std::path::Path>>(path: T, dtype: DType) -> anyh
     Ok(img)
 }
 
-pub fn student_noise(width: usize, height: usize, channels: usize, degrees_of_freedom: f64) -> Vec<f64> {
+pub fn student_noise(width: usize, height: usize, channels: usize, degrees_of_freedom: f64, seed: u64) -> Vec<f64> {
     let num_pixels = width * height * channels; // 3 values per pixel (R, G, B)
     let student = StudentT::new(degrees_of_freedom).unwrap();
-    let mut rng = thread_rng();
+    //let mut rng = thread_rng();
+    let mut rng = StdRng::seed_from_u64(seed);
+    
 
     // Generate raw noise values using the Student's t-distribution
     let noise_values: Vec<f64> = (0..num_pixels).map(|_| student.sample(&mut rng)).collect();
