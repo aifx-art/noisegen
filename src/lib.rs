@@ -26,8 +26,8 @@ pub fn image_to_tensor<T: AsRef<std::path::Path>>(path: T, dtype: DType) -> anyh
     Ok(img)
 }
 
-pub fn student_noise(width: usize, height: usize, degrees_of_freedom: f64) -> Vec<f64> {
-    let num_pixels = width * height * 3; // 3 values per pixel (R, G, B)
+pub fn student_noise(width: usize, height: usize, channels: usize, degrees_of_freedom: f64) -> Vec<f64> {
+    let num_pixels = width * height * channels; // 3 values per pixel (R, G, B)
     let student = StudentT::new(degrees_of_freedom).unwrap();
     let mut rng = thread_rng();
 
@@ -46,12 +46,13 @@ pub fn create_rgb_image_from_1d(
     normalized_data: &[f64],
     width: usize,
     height: usize,
+    channels: usize,
     output_path: &str,
 ) {
     // The total number of elements must match width * height * 3 (for R, G, B)
     assert_eq!(
         normalized_data.len(),
-        (width * height * 3) as usize,
+        (width * height * channels) as usize,
         "Data size must match image dimensions"
     );
 
