@@ -1,6 +1,8 @@
+use candle_core::{DType, Device, Tensor};
+use candle_transformers::models::bert::DTYPE;
 use image::{ImageBuffer, Rgb};
 
-use noisegen::{create_rgb_image_from_1d, student_noise};
+use noisegen::{create_rgb_image_from_1d, image_to_tensor, standardize, student_noise, unit_vec_to_char};
 use rand_distr::{StudentT, Distribution};
 use rand::Rng;
 
@@ -12,9 +14,21 @@ fn main() -> anyhow::Result<()> {
     let height = 100;
     let degrees_of_freedom = 1.0;
     let noise = student_noise(width, height, degrees_of_freedom);
-    
-    
+    let noise = standardize(&noise);
+    let channels = unit_vec_to_char(&noise);
+    let img = Tensor::from_vec(channels, (height, width, 3), &Device::Cpu)?
+    .permute((2, 0, 1))?
+    .to_dtype(DType::F16)?
+    .affine(2. / 255., -1.)?
+    .unsqueeze(0)?;
+
+    println!("tensors noise: {:?}",img);
     create_rgb_image_from_1d(&noise, width, height, "output.png");
+
+    let image_path = "test.png";
+    let dtype = DType::F16;
+    let image = image_to_tensor(image_path, dtype)?.to_device(&candle_core::Device::Cpu)?;
+    println!("{:?}", image);
 
     // let mut img = ImageBuffer::from_fn(width, height, |x, y| {
     //     Rgb([x as u8, y as u8, 128])

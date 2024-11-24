@@ -1,7 +1,30 @@
+use candle_core::{DType, Device, Tensor};
 use image::{ImageBuffer, Rgb};
 
 use rand::{thread_rng, Rng};
 use rand_distr::{Distribution, StudentT};
+
+pub fn image_to_tensor<T: AsRef<std::path::Path>>(path: T, dtype: DType) -> anyhow::Result<Tensor> {
+    let img = image::io::Reader::open(path)?.decode()?;
+    let (height, width) = (img.height() as usize, img.width() as usize);
+    //    let height = height - height % 32;
+    //let width = width - width % 32;
+    /* let img = img.resize_to_fill(
+        width as u32,
+        height as u32,
+        image::imageops::FilterType::CatmullRom,
+    ); */
+    let img = img.to_rgb8();
+    let img = img.into_raw();
+   // println!("image {:?}", img);
+    //let dtype = if use_f16 { DType::F16 } else { DType::F32 };
+    let img = Tensor::from_vec(img, (height, width, 3), &Device::Cpu)?
+        .permute((2, 0, 1))?
+        .to_dtype(dtype)?
+        .affine(2. / 255., -1.)?
+        .unsqueeze(0)?;
+    Ok(img)
+}
 
 pub fn student_noise(width: usize, height: usize, degrees_of_freedom: f64) -> Vec<f64> {
     let num_pixels = width * height * 3; // 3 values per pixel (R, G, B)
@@ -14,13 +37,17 @@ pub fn student_noise(width: usize, height: usize, degrees_of_freedom: f64) -> Ve
     let noise_values = standardize(&noise_values);
     //let v = normalize_to_range(&v, 0., 1.);
     //normalize_minmax(&v);
-    println!("{:?}", noise_values);
+    // println!("{:?}", noise_values);
 
     noise_values
 }
 
-
-pub fn create_rgb_image_from_1d(normalized_data: &[f64], width: usize, height: usize, output_path: &str) {
+pub fn create_rgb_image_from_1d(
+    normalized_data: &[f64],
+    width: usize,
+    height: usize,
+    output_path: &str,
+) {
     // The total number of elements must match width * height * 3 (for R, G, B)
     assert_eq!(
         normalized_data.len(),
@@ -29,7 +56,7 @@ pub fn create_rgb_image_from_1d(normalized_data: &[f64], width: usize, height: u
     );
 
     let img = ImageBuffer::from_fn(width as u32, height as u32, |x, y| {
-        let index = ((y as usize * width + x as usize) * 3) as usize ; // Calculate the starting index for (R, G, B)
+        let index = ((y as usize * width + x as usize) * 3) as usize; // Calculate the starting index for (R, G, B)
         let r = (normalized_data[index] * 255.0).round() as u8;
         let g = (normalized_data[index + 1] * 255.0).round() as u8;
         let b = (normalized_data[index + 2] * 255.0).round() as u8;
@@ -40,7 +67,7 @@ pub fn create_rgb_image_from_1d(normalized_data: &[f64], width: usize, height: u
     img.save(output_path).expect("Failed to save image");
 }
 
-fn create_rgb_image(
+pub fn create_rgb_image(
     normalized_data: &[(f64, f64, f64)],
     width: u32,
     height: u32,
@@ -65,7 +92,15 @@ fn create_rgb_image(
     img.save(output_path).expect("Failed to save image");
 }
 
-fn normalize_to_range(data: &[f64], min: f64, max: f64) -> Vec<f64> {
+pub fn unit_vec_to_char(data: &[f64]) -> Vec<u8> {
+    let mut channels = vec![];
+    for d in data {
+        channels.push((*d * 255.) as u8);
+    }
+    channels
+}
+
+pub fn normalize_to_range(data: &[f64], min: f64, max: f64) -> Vec<f64> {
     let data_min = data.iter().cloned().fold(f64::INFINITY, f64::min);
     let data_max = data.iter().cloned().fold(f64::NEG_INFINITY, f64::max);
     println!("{data_min} and max {data_max}");
@@ -91,7 +126,7 @@ pub fn normalize_minmax(values: &[f64]) -> Option<Vec<f64>> {
     Some(values.iter().map(|&x| (x - min) / (max - min)).collect())
 }
 
-fn standardize(data: &[f64]) -> Vec<f64> {
+pub fn standardize(data: &[f64]) -> Vec<f64> {
     let mean = data.iter().copied().sum::<f64>() / data.len() as f64;
     let variance = data.iter().map(|&x| (x - mean).powi(2)).sum::<f64>() / data.len() as f64;
     let std_dev = variance.sqrt();

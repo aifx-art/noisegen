@@ -8,3 +8,11 @@ anyhow = "1.0.93"
 image = "0.25.5"
 rand = "0.8.5"
 rand_distr = "0.4.3"
+
+
+candle-core = { path = "../../rust/candle/candle-core" }
+#candle-datasets = { path = "../candle/candle-datasets", optional = true }
+candle-nn = { path = "../../rust/candle/candle-nn" }
+candle-transformers = { path = "../../rust/candle/candle-transformers" }
+candle-flash-attn = { path = "../../rust/candle/candle-flash-attn", optional = true }
+candle-onnx = { path = "../../rust/candle/candle-onnx", optional = true }
