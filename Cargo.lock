@@ -213,7 +213,7 @@ checksum = "9ac0150caa2ae65ca5bd83f25c7de183dea78d4d366469f148435e2acfbad0da"
 
 [[package]]
 name = "candle-core"
-version = "0.7.2"
+version = "0.8.0"
 dependencies = [
  "byteorder",
  "candle-kernels",
@@ -236,7 +236,7 @@ dependencies = [
 
 [[package]]
 name = "candle-flash-attn"
-version = "0.7.2"
+version = "0.8.0"
 dependencies = [
  "anyhow",
  "bindgen_cuda",
@@ -246,14 +246,14 @@ dependencies = [
 
 [[package]]
 name = "candle-kernels"
-version = "0.7.2"
+version = "0.8.0"
 dependencies = [
  "bindgen_cuda",
 ]
 
 [[package]]
 name = "candle-nn"
-version = "0.7.2"
+version = "0.8.0"
 dependencies = [
  "candle-core",
  "half",
@@ -266,7 +266,7 @@ dependencies = [
 
 [[package]]
 name = "candle-onnx"
-version = "0.7.2"
+version = "0.8.0"
 dependencies = [
  "candle-core",
  "candle-nn",
@@ -276,7 +276,7 @@ dependencies = [
 
 [[package]]
 name = "candle-transformers"
-version = "0.7.2"
+version = "0.8.0"
 dependencies = [
  "byteorder",
  "candle-core",

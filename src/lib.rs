@@ -129,10 +129,16 @@ pub fn normalize_minmax(values: &[f64]) -> Option<Vec<f64>> {
     Some(values.iter().map(|&x| (x - min) / (max - min)).collect())
 }
 
-pub fn standardize(data: &[f64]) -> Vec<f64> {
+pub fn standardize(data: &[f64], target_std:f64, target_mean: f64) -> Vec<f64> {
     let mean = data.iter().copied().sum::<f64>() / data.len() as f64;
     let variance = data.iter().map(|&x| (x - mean).powi(2)).sum::<f64>() / data.len() as f64;
     let std_dev = variance.sqrt();
 
-    data.iter().map(|&x| (x - mean) / std_dev).collect()
+    let standardized_data: Vec<f64> = data.iter().map(|&x| (x - mean) / std_dev).collect();
+
+    // Transform to target mean and standard deviation
+    standardized_data
+        .iter()
+        .map(|&x| x * target_std + target_mean)
+        .collect()
 }
