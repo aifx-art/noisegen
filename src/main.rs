@@ -8,11 +8,13 @@ use rand::Rng;
 
 fn main() -> anyhow::Result<()> {
     
+    let stdev = 2.0;
+    let mean = -0.5;
     let width = 1024;
     let height = 1024;
-    let degrees_of_freedom = 5000000.0;
+    let degrees_of_freedom = 8.0;
      let noise = student_noise(width, height, 3, degrees_of_freedom, 420);
-     let noise = standardize(&noise);
+     let noise = standardize(&noise, stdev,mean);
     // let channels = unit_vec_to_char(&noise);
      let img = Tensor::from_vec(noise.clone(), (height, width,3), &Device::Cpu)?
      .permute((2, 0, 1))?
