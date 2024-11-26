@@ -12,7 +12,7 @@ fn main() -> anyhow::Result<()> {
     let height = 1024;
     let degrees_of_freedom = 5000000.0;
      let noise = student_noise(width, height, 3, degrees_of_freedom, 420);
-     let noise = standardize(&noise,1.0,0.5);
+     let noise = standardize(&noise);
     // let channels = unit_vec_to_char(&noise);
      let img = Tensor::from_vec(noise.clone(), (height, width,3), &Device::Cpu)?
      .permute((2, 0, 1))?
