@@ -44,6 +44,52 @@ pub fn student_noise(width: usize, height: usize, channels: usize, degrees_of_fr
     noise_values
 }
 
+
+
+pub fn gpu_student_noise(
+    //size: usize,
+    df: f64,
+    latent_image: &Tensor,
+    mean: f64,
+    stdev: f64,
+    //seed: Option<u64>,
+) -> anyhow::Result<Tensor, anyhow::Error> {
+    // Generate two uniform random tensors between 0 and 1
+    let dtype = latent_image.dtype();
+    let device = latent_image.device();
+    let shape = latent_image.shape();
+
+    // gaussian is not correct here
+    // let u1 = latent_image.rand_like(mean, stdev)?; 
+    //let u2 = latent_image.rand_like(mean, stdev)?;
+
+    //unform is correctf or the box-muller
+    let u1 = Tensor::rand(mean, stdev, shape, &device)?;
+    let u2 = Tensor::rand(mean, stdev, shape, &device)?;
+
+    // Box-Muller transform to get normal distribution
+    let two_pi = 2.0 * std::f64::consts::PI;
+    let r = (-2.0 * u1.log()?)?.sqrt()?;
+    let theta = u2.mul(&Tensor::full(two_pi, shape, device)?)?;
+    let z1 = r.mul(&theta.cos()?)?;
+
+    // Generate chi-square distribution with df degrees of freedom
+    let mut chi_square = latent_image.zeros_like()?;
+    for _ in 0..df as i32 {
+        //let normal = latent_image.rand_like(mean, stdev)?;
+        let normal = Tensor::rand(mean, stdev, shape, &device)?;
+        chi_square = chi_square.add(&normal.sqr()?)?;
+    }
+
+    // Convert to Student's t-distribution
+    let df_tensor = Tensor::full(df, shape, device)?;
+    let student_t = z1.mul(&(df_tensor.div(&chi_square)?.sqrt().unwrap()))?;
+    //println!("student noise on gpu {:?}", student_t);
+    Ok(student_t)
+}
+
+
+
 pub fn create_rgb_image_from_1d(
     normalized_data: &[f64],
     width: usize,
