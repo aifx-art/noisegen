@@ -26,7 +26,7 @@ pub fn image_to_tensor<T: AsRef<std::path::Path>>(path: T, dtype: DType) -> anyh
     Ok(img)
 }
 
-pub fn student_noise(width: usize, height: usize, channels: usize, degrees_of_freedom: f64, seed: u64) -> Vec<f64> {
+pub fn student_t_noise(width: usize, height: usize, channels: usize, degrees_of_freedom: f64, seed: u64) -> Vec<f64> {
     let num_pixels = width * height * channels; // 3 values per pixel (R, G, B)
     let student = StudentT::new(degrees_of_freedom).unwrap();
     //let mut rng = thread_rng();
@@ -46,7 +46,7 @@ pub fn student_noise(width: usize, height: usize, channels: usize, degrees_of_fr
 
 
 
-pub fn gpu_student_noise(
+pub fn gpu_student_t_noise(
     //size: usize,
     df: f64,
     latent_image: &Tensor,
@@ -58,10 +58,6 @@ pub fn gpu_student_noise(
     let dtype = latent_image.dtype();
     let device = latent_image.device();
     let shape = latent_image.shape();
-
-    // gaussian is not correct here
-    // let u1 = latent_image.rand_like(mean, stdev)?; 
-    //let u2 = latent_image.rand_like(mean, stdev)?;
 
     //unform is correctf or the box-muller
     let u1 = Tensor::rand(mean, stdev, shape, &device)?;

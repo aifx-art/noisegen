@@ -3,8 +3,8 @@ use candle_transformers::models::bert::DTYPE;
 use image::{ImageBuffer, Rgb};
 
 use noisegen::{
-    create_rgb_image, create_rgb_image_from_1d, gpu_student_noise, image_to_tensor, standardize,
-    student_noise, unit_vec_to_char,
+    create_rgb_image, create_rgb_image_from_1d, gpu_student_t_noise, image_to_tensor, standardize,
+    student_t_noise, unit_vec_to_char,
 };
 use rand::Rng;
 use rand_distr::{Distribution, StudentT};
@@ -16,8 +16,8 @@ fn main() -> anyhow::Result<()> {
     let height = 1024;
 
     //student
-    let degrees_of_freedom = 11.0;
-    let noise = student_noise(width, height, 3, degrees_of_freedom, 420);
+    let degrees_of_freedom = 1.0;
+    let noise = student_t_noise(width, height, 3, degrees_of_freedom, 420);
     let noise = standardize(&noise, stdev, mean);
     // let channels = unit_vec_to_char(&noise);
     let img = Tensor::from_vec(noise.clone(), (height, width, 3), &Device::Cpu)?
@@ -35,7 +35,7 @@ fn main() -> anyhow::Result<()> {
     //gpu student
     //
     let latent_image = Tensor::zeros((height, width, 3), DType::F64, &Device::Cpu)?;
-    let noise = gpu_student_noise(degrees_of_freedom, &latent_image, mean, stdev)?;
+    let noise = gpu_student_t_noise(degrees_of_freedom, &latent_image, mean, stdev)?;
     //   let noise = standardize(&noise, stdev,mean);
     // let channels = unit_vec_to_char(&noise);
     //let img = Tensor::from_vec(noise.clone(), (height, width,3), &Device::Cpu)?
