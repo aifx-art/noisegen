@@ -60,9 +60,11 @@ pub fn gpu_student_t_noise(
     let shape = latent_image.shape();
 
     //unform is correctf or the box-muller
-    let u1 = Tensor::rand(mean, stdev, shape, &device)?;
-    let u2 = Tensor::rand(mean, stdev, shape, &device)?;
+    //let u1 = Tensor::rand(mean, stdev, shape, &device)?;
+    //let u2 = Tensor::rand(mean, stdev, shape, &device)?;
 
+    let u1 = Tensor::rand(0.0, 1.0, shape, &device)?;
+    let u2 = Tensor::rand(0.0, 1.0, shape, &device)?;
     // Box-Muller transform to get normal distribution
     let two_pi = 2.0 * std::f64::consts::PI;
     let r = (-2.0 * u1.log()?)?.sqrt()?;
@@ -73,15 +75,29 @@ pub fn gpu_student_t_noise(
     let mut chi_square = latent_image.zeros_like()?;
     for _ in 0..df as i32 {
         //let normal = latent_image.rand_like(mean, stdev)?;
-        let normal = Tensor::rand(mean, stdev, shape, &device)?;
-        chi_square = chi_square.add(&normal.sqr()?)?;
+        //uniform
+        //let normal = Tensor::rand(mean, stdev, shape, &device)?;
+        //chi_square = chi_square.add(&normal.sqr()?)?;
+          // Generate standard normal using Box-Muller again for consistency
+          let u1 = Tensor::rand(0.0, 1.0, shape, &device)?;
+          let u2 = Tensor::rand(0.0, 1.0, shape, &device)?;
+          
+          let r = (-2.0 * u1.log()?)?.sqrt()?;
+          let theta = u2.mul(&Tensor::full(two_pi, shape, device)?)?;
+          let normal = r.mul(&theta.cos()?)?;
+          
+          chi_square = chi_square.add(&normal.sqr()?)?;
+
     }
 
     // Convert to Student's t-distribution
     let df_tensor = Tensor::full(df, shape, device)?;
     let student_t = z1.mul(&(df_tensor.div(&chi_square)?.sqrt().unwrap()))?;
-    //println!("student noise on gpu {:?}", student_t);
-    Ok(student_t)
+    println!("student noise on gpu {:?}", student_t);
+    let scaled_t = student_t.mul(&Tensor::full(stdev, shape, device)?)?
+    .add(&Tensor::full(mean, shape, device)?)?;
+
+    Ok(scaled_t)
 }
 
 

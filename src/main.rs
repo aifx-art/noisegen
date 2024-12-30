@@ -16,7 +16,7 @@ fn main() -> anyhow::Result<()> {
     let height = 1024;
 
     //student
-    let degrees_of_freedom = 1.0;
+    let degrees_of_freedom = 8.0;
     let noise = student_t_noise(width, height, 3, degrees_of_freedom, 420);
     let noise = standardize(&noise, stdev, mean);
     // let channels = unit_vec_to_char(&noise);
