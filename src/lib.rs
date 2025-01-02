@@ -228,11 +228,11 @@ pub fn flatten_tensor(image: &Tensor) -> anyhow::Result<Vec<(f64, f64, f64)>> {
  */
 
 pub fn adjust_contrast(latent_image: &Tensor, amount: f64) -> anyhow::Result<Tensor> {
-    let (c, h, w) = latent_image.dims3()?;
+    let (_, c, h, w) = latent_image.dims4()?;
     let mut channels = Vec::with_capacity(c);
 
     for i in 0..c {
-        let channel_image = latent_image.i(i)?; // Get the i-th channel
+        let channel_image = latent_image.i(0)?.i(i)?; // Get the i-th channel
         println!(
             "channel max: {:?} min: {:?}",
             channel_image.max_all(),
@@ -250,17 +250,19 @@ pub fn adjust_contrast(latent_image: &Tensor, amount: f64) -> anyhow::Result<Ten
         }
 
         // Create a new tensor from the adjusted values
-        let adjusted_channel = Tensor::from_vec(data, (h, w), &latent_image.device())?;
+        let  adjusted_channel = Tensor::from_vec(data, (h, w), &latent_image.device())?;
         println!(
             "adjustd max: {:?} min: {:?}",
             adjusted_channel.max_all(),
             adjusted_channel.min_all()
         );
+
         channels.push(adjusted_channel);
     }
 
     // Stack the adjusted channels back together into a single tensor
-    let new_image = Tensor::stack(&channels, 0)?;
+    let mut new_image = Tensor::stack(&channels, 0)?;
+    new_image = new_image.unsqueeze(0)?;
 
     Ok(new_image)
 }
