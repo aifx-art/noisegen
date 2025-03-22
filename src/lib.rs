@@ -33,7 +33,7 @@ pub fn student_t_noise(
     degrees_of_freedom: f64,
     seed: u64,
 ) -> Vec<f64> {
-    let num_pixels = width * height * channels; // 3 values per pixel (R, G, B)
+    let num_pixels = width * height * channels; 
     let student = StudentT::new(degrees_of_freedom).unwrap();
     //let mut rng = thread_rng();
     let mut rng = StdRng::seed_from_u64(seed);
