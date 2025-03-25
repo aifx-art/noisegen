@@ -208,7 +208,7 @@ checksum = "8f1fe948ff07f4bd06c30984e69f5b4899c516a3ef74f34df92a2df2ab535495"
 [[package]]
 name = "candle-core"
 version = "0.8.4"
-source = "git+https://github.com/aifx-art/candle.git?branch=wip2#b16204d92d1487e05da9dd23320b77e5a69aed4e"
+source = "git+https://github.com/aifx-art/candle.git?branch=test-fa#69b8e50466fda8ac40de2bbe9a89c5e4ab54cdaa"
 dependencies = [
  "byteorder",
  "candle-kernels",
@@ -232,7 +232,7 @@ dependencies = [
 [[package]]
 name = "candle-flash-attn"
 version = "0.8.4"
-source = "git+https://github.com/aifx-art/candle.git?branch=wip2#b16204d92d1487e05da9dd23320b77e5a69aed4e"
+source = "git+https://github.com/aifx-art/candle.git?branch=test-fa#69b8e50466fda8ac40de2bbe9a89c5e4ab54cdaa"
 dependencies = [
  "anyhow",
  "bindgen_cuda",
@@ -243,7 +243,7 @@ dependencies = [
 [[package]]
 name = "candle-kernels"
 version = "0.8.4"
-source = "git+https://github.com/aifx-art/candle.git?branch=wip2#b16204d92d1487e05da9dd23320b77e5a69aed4e"
+source = "git+https://github.com/aifx-art/candle.git?branch=test-fa#69b8e50466fda8ac40de2bbe9a89c5e4ab54cdaa"
 dependencies = [
  "bindgen_cuda",
 ]
@@ -251,7 +251,7 @@ dependencies = [
 [[package]]
 name = "candle-nn"
 version = "0.8.4"
-source = "git+https://github.com/aifx-art/candle.git?branch=wip2#b16204d92d1487e05da9dd23320b77e5a69aed4e"
+source = "git+https://github.com/aifx-art/candle.git?branch=test-fa#69b8e50466fda8ac40de2bbe9a89c5e4ab54cdaa"
 dependencies = [
  "candle-core",
  "half",
@@ -265,7 +265,7 @@ dependencies = [
 [[package]]
 name = "candle-transformers"
 version = "0.8.4"
-source = "git+https://github.com/aifx-art/candle.git?branch=wip2#b16204d92d1487e05da9dd23320b77e5a69aed4e"
+source = "git+https://github.com/aifx-art/candle.git?branch=test-fa#69b8e50466fda8ac40de2bbe9a89c5e4ab54cdaa"
 dependencies = [
  "byteorder",
  "candle-core",
