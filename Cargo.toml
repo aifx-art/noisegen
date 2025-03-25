@@ -9,10 +9,8 @@ image = "0.25.5"
 rand = "0.9.0"
 rand_distr = "0.5.1"
 
-
-candle-core = { path = "../../rust/candle/candle-core" }
-#candle-datasets = { path = "../candle/candle-datasets", optional = true }
-candle-nn = { path = "../../rust/candle/candle-nn" }
-candle-transformers = { path = "../../rust/candle/candle-transformers" }
-candle-flash-attn = { path = "../../rust/candle/candle-flash-attn", optional = true }
-candle-onnx = { path = "../../rust/candle/candle-onnx", optional = true }
+candle-core = { git = "https://github.com/aifx-art/candle.git", branch = "wip2" }
+#candle-datasets = { git = "https://github.com/aifx-art/candle.git", branch = "wip", optional=true}
+candle-nn = { git = "https://github.com/aifx-art/candle.git", optional = false, branch = "wip2" }
+candle-transformers = { git = "https://github.com/aifx-art/candle.git", optional = false, branch = "wip2" }
+candle-flash-attn = { git = "https://github.com/aifx-art/candle.git", branch = "wip2", optional = true }
