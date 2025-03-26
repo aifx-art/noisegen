@@ -9,8 +9,8 @@ image = "0.25.6"
 rand = "0.9.0"
 rand_distr = "0.5.1"
 
-candle-core = { git = "https://github.com/aifx-art/candle.git", branch = "67b85f79f1db1de1cd11fb0bdd61f559a01d2d7a" }
+candle-core = { git = "https://github.com/aifx-art/candle.git", rev = "67b85f79f1db1de1cd11fb0bdd61f559a01d2d7a" }
 #candle-datasets = { git = "https://github.com/aifx-art/candle.git", branch = "wip", optional=true}
-candle-nn = { git = "https://github.com/aifx-art/candle.git", optional = false, branch = "67b85f79f1db1de1cd11fb0bdd61f559a01d2d7a" }
-candle-transformers = { git = "https://github.com/aifx-art/candle.git", optional = false, branch = "67b85f79f1db1de1cd11fb0bdd61f559a01d2d7a" }
+candle-nn = { git = "https://github.com/aifx-art/candle.git", optional = false, rev = "67b85f79f1db1de1cd11fb0bdd61f559a01d2d7a" }
+candle-transformers = { git = "https://github.com/aifx-art/candle.git", optional = false, rev = "67b85f79f1db1de1cd11fb0bdd61f559a01d2d7a" }
 #candle-flash-attn = { git = "https://github.com/aifx-art/candle.git", branch = "main", optional = true }
