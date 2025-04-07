@@ -169,8 +169,8 @@ checksum = "8f1fe948ff07f4bd06c30984e69f5b4899c516a3ef74f34df92a2df2ab535495"
 
 [[package]]
 name = "candle-core"
-version = "0.8.4"
-source = "git+https://github.com/aifx-art/candle.git?branch=main#f3d472952f5a3156d39fe1e96e64589b8d2776a3"
+version = "0.9.0-alpha.1"
+source = "git+https://github.com/aifx-art/candle.git?branch=aifx#2f3bf42bcba225e956efe086b9534ae53a59213e"
 dependencies = [
  "byteorder",
  "gemm 0.17.1",
@@ -190,8 +190,8 @@ dependencies = [
 
 [[package]]
 name = "candle-nn"
-version = "0.8.4"
-source = "git+https://github.com/aifx-art/candle.git?branch=main#f3d472952f5a3156d39fe1e96e64589b8d2776a3"
+version = "0.9.0-alpha.1"
+source = "git+https://github.com/aifx-art/candle.git?branch=aifx#2f3bf42bcba225e956efe086b9534ae53a59213e"
 dependencies = [
  "candle-core",
  "half",
@@ -204,8 +204,8 @@ dependencies = [
 
 [[package]]
 name = "candle-transformers"
-version = "0.8.4"
-source = "git+https://github.com/aifx-art/candle.git?branch=main#f3d472952f5a3156d39fe1e96e64589b8d2776a3"
+version = "0.9.0-alpha.1"
+source = "git+https://github.com/aifx-art/candle.git?branch=aifx#2f3bf42bcba225e956efe086b9534ae53a59213e"
 dependencies = [
  "byteorder",
  "candle-core",
@@ -1649,9 +1649,9 @@ dependencies = [
 
 [[package]]
 name = "ug"
-version = "0.1.0"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "03719c61a91b51541f076dfdba45caacf750b230cefaa4b32d6f5411c3f7f437"
+checksum = "f8b4e6c66f5eda774e2dcb5e35779b4a7c7ab8557c7de46398716b824464cacb"
 dependencies = [
  "gemm 0.18.2",
  "half",
