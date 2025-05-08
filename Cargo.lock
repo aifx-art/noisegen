@@ -169,8 +169,8 @@ checksum = "8f1fe948ff07f4bd06c30984e69f5b4899c516a3ef74f34df92a2df2ab535495"
 
 [[package]]
 name = "candle-core"
-version = "0.9.0-alpha.5"
-source = "git+https://github.com/aifx-art/candle.git?branch=aifx#a4c56a958e6151c6cb8cf4790d6b2595ff4e7809"
+version = "0.9.1"
+source = "git+https://github.com/aifx-art/candle.git?branch=aifx#3d05f5cf3d8253e373a1c465953aeec1b702da8b"
 dependencies = [
  "byteorder",
  "gemm 0.17.1",
@@ -190,8 +190,8 @@ dependencies = [
 
 [[package]]
 name = "candle-nn"
-version = "0.9.0-alpha.5"
-source = "git+https://github.com/aifx-art/candle.git?branch=aifx#a4c56a958e6151c6cb8cf4790d6b2595ff4e7809"
+version = "0.9.1"
+source = "git+https://github.com/aifx-art/candle.git?branch=aifx#3d05f5cf3d8253e373a1c465953aeec1b702da8b"
 dependencies = [
  "candle-core",
  "half",
@@ -204,8 +204,8 @@ dependencies = [
 
 [[package]]
 name = "candle-transformers"
-version = "0.9.0-alpha.5"
-source = "git+https://github.com/aifx-art/candle.git?branch=aifx#a4c56a958e6151c6cb8cf4790d6b2595ff4e7809"
+version = "0.9.1"
+source = "git+https://github.com/aifx-art/candle.git?branch=aifx#3d05f5cf3d8253e373a1c465953aeec1b702da8b"
 dependencies = [
  "byteorder",
  "candle-core",
