@@ -54,7 +54,7 @@ fn main() -> anyhow::Result<()> {
         .unsqueeze(0)?;
     println!("gpu tensor img shape {:?}", img);
     let meani = img.mean_all()?;
-        //let mean_tensor = Tensor::full(meani, img.shape(), img.device())?.to_dtype(DType::F16)?;
+    //let mean_tensor = Tensor::full(meani, img.shape(), img.device())?.to_dtype(DType::F16)?;
     println!(
         "GPU studentT tensor noise mean: {:.4} std:  , min: {:.4}, max {:.4}",
         meani,
@@ -72,6 +72,29 @@ fn main() -> anyhow::Result<()> {
         &filename,
     );
 
+    //gaussian
+    //(1, 16, h, w)
+    let img = Tensor::randn(mean, stdev, img.shape(), img.device())?; // .to_dtype(dtype)?,
+    let meani = img.mean_all()?;
+    //let mean_tensor = Tensor::full(meani, img.shape(), img.device())?.to_dtype(DType::F16)?;
+    println!(
+        "GAUSSIAN tensor noise mean: {:.4} std:  , min: {:.4}, max {:.4}",
+        meani,
+        //std_all(&img, &mean_tensor)?,
+        img.min_all()?,
+        img.max_all()?
+    );
+
+    let flattened_image = flatten_tensor_rgb(&img.squeeze(0)?)?;
+    let filename = format!("gaussian.png", );
+    create_rgb_image(
+        &flattened_image,
+        width.try_into().unwrap(),
+        height.try_into().unwrap(),
+        &filename,
+    );
+
+    /// reshaping and stuff
     let reshaped_noise = noise.permute((2, 0, 1))?;
     /*     let mean_f = reshaped_noise.mean_all()?.to_scalar::<f64>()?;
     let mean_tensor = Tensor::full(mean_f, reshaped_noise.shape(), reshaped_noise.device())?;
