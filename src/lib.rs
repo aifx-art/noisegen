@@ -33,7 +33,7 @@ pub fn student_t_noise(
     degrees_of_freedom: f64,
     seed: u64,
 ) -> Vec<f64> {
-    let num_pixels = width * height * channels; 
+    let num_pixels = width * height * channels;
     let student = StudentT::new(degrees_of_freedom).unwrap();
     //let mut rng = thread_rng();
     let mut rng = StdRng::seed_from_u64(seed);
@@ -41,12 +41,15 @@ pub fn student_t_noise(
     // Generate raw noise values using the Student's t-distribution
     let noise_values: Vec<f64> = (0..num_pixels).map(|_| student.sample(&mut rng)).collect();
 
-    //let noise_values = standardize(&noise_values);
+    //let noise_values = standardize(&noise_values,1.0,0.);
     //let noise_values = normalize_to_range(&noise_values, 0., 1.);
     //normalize_minmax(&v);
     // println!("{:?}", noise_values);
-
-    noise_values
+    let clamped: Vec<f64> = noise_values
+        .into_iter()
+        .map(|x| x.clamp(-5.0, 5.0))
+        .collect();
+    clamped
 }
 
 pub fn gpu_student_t_noise(
@@ -92,10 +95,11 @@ pub fn gpu_student_t_noise(
         .mul(&Tensor::full(stdev, shape, device)?)?
         .add(&Tensor::full(mean, shape, device)?)?;
 
+    let clamped = scaled_t.clamp(-5.0, 5.0)?;
     // Normalize to desired range [-1, 1]
     //let normal_noise = normalize_tensor(&scaled_t, -1.0, 1.0)?;
     //let scaled_t = standardize_tensor(&scaled_t)?;
-    Ok(scaled_t)
+    Ok(clamped)
 
     /* let device = latent_image.device();
     let shape = latent_image.shape();
@@ -250,7 +254,7 @@ pub fn adjust_contrast(latent_image: &Tensor, amount: f64) -> anyhow::Result<Ten
         }
 
         // Create a new tensor from the adjusted values
-        let  adjusted_channel = Tensor::from_vec(data, (h, w), &latent_image.device())?;
+        let adjusted_channel = Tensor::from_vec(data, (h, w), &latent_image.device())?;
         println!(
             "adjustd max: {:?} min: {:?}",
             adjusted_channel.max_all(),
