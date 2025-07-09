@@ -15,7 +15,7 @@ fn main() -> anyhow::Result<()> {
     let mean = -0.0;
     let width = 1024;
     let height = 1024;
-    let degrees_of_freedom = 5.0;
+    let degrees_of_freedom = 6.0;
 
     //StudentT CPU
     let noise = student_t_noise(width, height, 3, degrees_of_freedom, 420);
