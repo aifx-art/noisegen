@@ -170,7 +170,7 @@ checksum = "8f1fe948ff07f4bd06c30984e69f5b4899c516a3ef74f34df92a2df2ab535495"
 [[package]]
 name = "candle-core"
 version = "0.9.1"
-source = "git+https://github.com/aifx-art/candle-eb.git?branch=dev_main#2f78d676e710cebe4ee3e8a1688cbbc1aca64db6"
+source = "git+https://github.com/huggingface/candle.git#16e1d7301fcc025aff95cfd28af175d171f35ca7"
 dependencies = [
  "byteorder",
  "float8",
@@ -182,7 +182,7 @@ dependencies = [
  "rand 0.9.1",
  "rand_distr",
  "rayon",
- "safetensors 0.6.0",
+ "safetensors",
  "thiserror",
  "ug",
  "yoke",
@@ -192,13 +192,13 @@ dependencies = [
 [[package]]
 name = "candle-nn"
 version = "0.9.1"
-source = "git+https://github.com/aifx-art/candle-eb.git?branch=dev_main#2f78d676e710cebe4ee3e8a1688cbbc1aca64db6"
+source = "git+https://github.com/huggingface/candle.git#16e1d7301fcc025aff95cfd28af175d171f35ca7"
 dependencies = [
  "candle-core",
  "half",
  "num-traits",
  "rayon",
- "safetensors 0.6.0",
+ "safetensors",
  "serde",
  "thiserror",
 ]
@@ -206,7 +206,7 @@ dependencies = [
 [[package]]
 name = "candle-transformers"
 version = "0.9.1"
-source = "git+https://github.com/aifx-art/candle-eb.git?branch=dev_main#2f78d676e710cebe4ee3e8a1688cbbc1aca64db6"
+source = "git+https://github.com/huggingface/candle.git#16e1d7301fcc025aff95cfd28af175d171f35ca7"
 dependencies = [
  "byteorder",
  "candle-core",
@@ -406,12 +406,13 @@ dependencies = [
 
 [[package]]
 name = "float8"
-version = "0.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0f498aec3b227cd892ce18967f4033d9d397d28a80a7ab67e9f6b0176a79654e"
+version = "0.2.1"
+source = "git+https://github.com/zackangelo/float8?branch=cudarc_0_16#03c1f5fe7cdb2f9cb690823fdd40593be57c408f"
 dependencies = [
  "half",
  "num-traits",
+ "rand 0.9.1",
+ "rand_distr",
 ]
 
 [[package]]
@@ -1402,16 +1403,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "safetensors"
-version = "0.6.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "617df84b8360fc910a687afe4be1c4660bf7c090d448d2fc27c781e852205f7c"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
 name = "same-file"
 version = "1.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1688,7 +1679,7 @@ dependencies = [
  "num-traits",
  "num_cpus",
  "rayon",
- "safetensors 0.4.5",
+ "safetensors",
  "serde",
  "thiserror",
  "tracing",
