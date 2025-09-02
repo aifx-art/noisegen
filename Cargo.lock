@@ -170,7 +170,7 @@ checksum = "8f1fe948ff07f4bd06c30984e69f5b4899c516a3ef74f34df92a2df2ab535495"
 [[package]]
 name = "candle-core"
 version = "0.9.1"
-source = "git+https://github.com/huggingface/candle.git#16e1d7301fcc025aff95cfd28af175d171f35ca7"
+source = "git+https://github.com/huggingface/candle.git#93845ed2995b0556dca96580f1bffa49f3c5b3a3"
 dependencies = [
  "byteorder",
  "float8",
@@ -192,10 +192,11 @@ dependencies = [
 [[package]]
 name = "candle-nn"
 version = "0.9.1"
-source = "git+https://github.com/huggingface/candle.git#16e1d7301fcc025aff95cfd28af175d171f35ca7"
+source = "git+https://github.com/huggingface/candle.git#93845ed2995b0556dca96580f1bffa49f3c5b3a3"
 dependencies = [
  "candle-core",
  "half",
+ "libc",
  "num-traits",
  "rayon",
  "safetensors",
@@ -206,7 +207,7 @@ dependencies = [
 [[package]]
 name = "candle-transformers"
 version = "0.9.1"
-source = "git+https://github.com/huggingface/candle.git#16e1d7301fcc025aff95cfd28af175d171f35ca7"
+source = "git+https://github.com/huggingface/candle.git#93845ed2995b0556dca96580f1bffa49f3c5b3a3"
 dependencies = [
  "byteorder",
  "candle-core",
@@ -911,7 +912,7 @@ checksum = "650eef8c711430f1a879fdd01d4745a7deea475becfb90269c06775983bbf086"
 
 [[package]]
 name = "noisegen"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "anyhow",
  "candle-core",
