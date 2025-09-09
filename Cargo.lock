@@ -170,7 +170,7 @@ checksum = "8f1fe948ff07f4bd06c30984e69f5b4899c516a3ef74f34df92a2df2ab535495"
 [[package]]
 name = "candle-core"
 version = "0.9.1"
-source = "git+https://github.com/huggingface/candle.git#0cf516d1cc1e202402eca4e6e5e33fcf2ed6e660"
+source = "git+https://github.com/huggingface/candle.git#8045af96c7ebe85fd4637e030dba6aee3b176dad"
 dependencies = [
  "byteorder",
  "float8",
@@ -192,7 +192,7 @@ dependencies = [
 [[package]]
 name = "candle-nn"
 version = "0.9.1"
-source = "git+https://github.com/huggingface/candle.git#0cf516d1cc1e202402eca4e6e5e33fcf2ed6e660"
+source = "git+https://github.com/huggingface/candle.git#8045af96c7ebe85fd4637e030dba6aee3b176dad"
 dependencies = [
  "candle-core",
  "half",
@@ -207,7 +207,7 @@ dependencies = [
 [[package]]
 name = "candle-transformers"
 version = "0.9.1"
-source = "git+https://github.com/huggingface/candle.git#0cf516d1cc1e202402eca4e6e5e33fcf2ed6e660"
+source = "git+https://github.com/huggingface/candle.git#8045af96c7ebe85fd4637e030dba6aee3b176dad"
 dependencies = [
  "byteorder",
  "candle-core",
@@ -407,8 +407,9 @@ dependencies = [
 
 [[package]]
 name = "float8"
-version = "0.2.1"
-source = "git+https://github.com/zackangelo/float8?branch=cudarc_0_16#03c1f5fe7cdb2f9cb690823fdd40593be57c408f"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4203231de188ebbdfb85c11f3c20ca2b063945710de04e7b59268731e728b462"
 dependencies = [
  "half",
  "num-traits",
