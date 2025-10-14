@@ -17,13 +17,13 @@ rand_distr = "0.5.1"
 # candle-nn = { git = "https://github.com/aifx-art/candle.git", optional = false, branch = "aifx" }
 # candle-transformers = { git = "https://github.com/aifx-art/candle.git", optional = false, branch = "aifx" }
 
-candle-core = { git = "https://github.com/aifx-art/candle-eb.git", branch = "dev_main" }
-candle-nn = { git = "https://github.com/aifx-art/candle-eb.git", optional = false, branch = "dev_main" }
-candle-transformers = { git = "https://github.com/aifx-art/candle-eb.git", optional = false, branch = "dev_main" }
+#candle-core = { git = "https://github.com/aifx-art/candle-eb.git", branch = "dev_main" }
+#candle-nn = { git = "https://github.com/aifx-art/candle-eb.git", optional = false, branch = "dev_main" }
+#candle-transformers = { git = "https://github.com/aifx-art/candle-eb.git", optional = false, branch = "dev_main" }
 
-#candle-core = {  git = "https://github.com/huggingface/candle.git"  }
-#candle-nn = {git = "https://github.com/huggingface/candle.git", optional=false}
-#candle-transformers = {git = "https://github.com/huggingface/candle.git",  optional=false}
+candle-core = {  git = "https://github.com/huggingface/candle.git"  }
+candle-nn = {git = "https://github.com/huggingface/candle.git", optional=false}
+candle-transformers = {git = "https://github.com/huggingface/candle.git",  optional=false}
 
 # candle-core = { path = "../../rust/candle/candle-core" }
 # candle-nn = { path = "../../rust/candle/candle-nn" }
